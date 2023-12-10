@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Link Shortener{% endblock %}
+
+{% block header_refrences %}
+<link rel="stylesheet" href="{% static "create_link/style.css" %}">
+{% endblock %}
+
+{% block body %}
+<div class="shortener-container">
+    <h2>URL Shortener</h2>
+    <form id="shorten-form" action="{% url "home" %}" method="post">
+        {% csrf_token %}
+        <label for="original-url">Enter Your URL:</label>
+        {{ form.link }}
+        <button type="submit">Shorten URL</button>
+    </form>
+    <div id="shortened-url"></div>
+</div>
+{% if new_link %}
+<div class="shortened-url-container">
+    <h2>Shortened URL</h2>
+    <div id="shortened-link">Shortened URL:</div>
+    <a href="{% url "redirector" new_link %}" target="_blank" rel="noopener noreferrer">htts://my-domain.com/{{ new_link }}</a>
+</div>
+{% endif %}
+{% endblock %}
